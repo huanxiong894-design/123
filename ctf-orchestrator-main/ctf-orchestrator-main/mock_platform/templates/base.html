@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}羊城杯 mock{% endblock %}</title>
+<style>
+  :root { color-scheme: light; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #f2f4f8; color: #1d2433;
+         font: 14px/1.6 -apple-system, "Segoe UI", "Noto Sans CJK SC", "Microsoft YaHei", sans-serif; }
+  a { color: #2457c5; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .wrap { width: min(1080px, calc(100% - 40px)); margin: 0 auto; }
+  .top { background: #fff; border-bottom: 1px solid #e2e6ef; }
+  .top-inner { display: flex; align-items: center; justify-content: space-between; height: 58px; }
+  .brand { font-size: 18px; font-weight: 700; color: #16213a; }
+  .brand span { color: #7a869f; font-weight: 500; font-size: 13px; margin-left: 6px; }
+  nav { display: flex; gap: 18px; align-items: center; }
+  .who { color: #56617a; }
+  main { padding: 28px 0 60px; }
+  footer { color: #8a94a8; padding: 20px 0 40px; font-size: 12px; }
+  .hero h1 { font-size: 22px; margin: 0 0 6px; }
+  .muted { color: #77819a; }
+  .small { font-size: 12px; }
+  .card { background: #fff; border: 1px solid #e2e6ef; border-radius: 12px; padding: 22px; }
+  .login-card { max-width: 440px; margin: 24px auto; }
+  label { display: block; margin: 14px 0; font-weight: 600; }
+  input { display: block; width: 100%; margin-top: 6px; padding: 10px 12px; border: 1px solid #cfd6e4;
+          border-radius: 8px; font: inherit; background: #fff; }
+  input:focus { outline: 2px solid #9db6f1; border-color: #5a7fd6; }
+  .captcha-row { display: flex; gap: 10px; align-items: center; }
+  .captcha-row input { flex: 1; }
+  .captcha-row img { height: 44px; border: 1px solid #cfd6e4; border-radius: 8px; background: #fff; }
+  button, .button { border: 0; border-radius: 8px; padding: 10px 18px; font: inherit; font-weight: 600;
+          cursor: pointer; background: #e8ecf5; color: #27314a; }
+  button.primary, .button.primary { background: #2457c5; color: #fff; width: 100%; margin-top: 10px; }
+  .alert { border-radius: 8px; padding: 10px 14px; margin: 10px 0; }
+  .alert.err { background: #fdecec; color: #a12626; }
+  .alert.ok { background: #e8f6ed; color: #1c6b3a; }
+  table { width: 100%; border-collapse: collapse; background: #fff; }
+  th, td { text-align: left; padding: 12px 14px; border-bottom: 1px solid #e8ecf3; }
+  th { color: #68738c; font-size: 12px; text-transform: uppercase; letter-spacing: .04em; }
+  tr:last-child td { border-bottom: 0; }
+  .tag { display: inline-block; padding: 1px 8px; border-radius: 999px; background: #eef2fb; color: #3c548c;
+         font-size: 12px; }
+  .tag.solved { background: #e8f6ed; color: #1c6b3a; }
+  .score { font-variant-numeric: tabular-nums; font-weight: 700; }
+  .panel { background: #fff; border: 1px solid #e2e6ef; border-radius: 12px; padding: 18px 22px; margin-bottom: 16px; }
+  .panel h2 { font-size: 16px; margin: 0 0 10px; }
+  .desc { white-space: pre-wrap; word-break: break-word; background: #f8fafc; border: 1px solid #e8ecf3;
+          border-radius: 8px; padding: 14px; font-family: inherit; }
+  .meta { display: flex; flex-wrap: wrap; gap: 18px; color: #68738c; font-size: 13px; margin: 8px 0 18px; }
+  .meta b { color: #1d2433; }
+  .attachments li { margin: 4px 0; }
+  code { background: #eef2f8; padding: 1px 6px; border-radius: 4px; font-family: ui-monospace, Menlo, monospace; }
+  .row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .inline-form { display: inline; }
+  .inline-form button { width: auto; margin: 0; }
+  .submit-form { display: flex; gap: 10px; align-items: center; }
+  .submit-form input { margin: 0; flex: 1; }
+  .submit-form button { width: auto; margin: 0; background: #2457c5; color: #fff; }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap top-inner">
+    <a class="brand" href="/compete/1749">羊城杯 <span>mock 平台</span></a>
+    <nav>
+      <a href="/compete/1749">赛题</a>
+      {% if user %}<span class="who">{{ user }}</span><a href="/1749/logout">退出</a>{% endif %}
+    </nav>
+  </div>
+</header>
+<main class="wrap">
+  {% block content %}{% endblock %}
+</main>
+<footer class="wrap">本地 mock 平台 · 仅用于开发与 e2e 验证，不连接真实比赛</footer>
+</body>
+</html>

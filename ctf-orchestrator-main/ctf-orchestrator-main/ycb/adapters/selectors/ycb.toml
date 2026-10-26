@@ -1,0 +1,100 @@
+# 2026 羊城杯 / DASCTF 选择器（按优先级排列，命中第一个即可）
+# 真实页面改版时只改这里；DOM 发现失败时用 var/debug/platform 下的截图/HTML 校准。
+
+[login]
+username = [
+  "input[placeholder='请输入您的账号/手机号']",
+  "input[placeholder*='账号']",
+  "input[placeholder*='手机号']",
+  "input[type='text']",
+]
+password = [
+  "input[placeholder='请输入您的密码']",
+  "input[placeholder*='密码']",
+  "input[type='password']",
+]
+captcha = [
+  "input[placeholder='请输入图形验证码']",
+  "input[placeholder*='验证码']",
+]
+captcha_image = [
+  "img[src^='data:image']",
+  ".captcha img",
+  "img[alt*='验证码']",
+]
+submit = [
+  "button:has-text('立即登录')",
+  "button:has-text('登录')",
+  ".login-btn",
+  ".el-button--primary:has-text('登录')",
+]
+error = [
+  ".el-message__content",
+  ".el-form-item__error",
+  ".el-notification__content",
+]
+logged_in = [
+  ".portal-user",
+  ".user_info_popover_user",
+  "text=退出登录",
+]
+
+[challenge]
+page = [
+  ".topic_number_content",
+  ".topic_content",
+  ".user_compete_topic",
+]
+type_item = [
+  ".type_list .type_item",
+]
+number_item = [
+  ".topic_number_list .number_item",
+  ".number_item",
+]
+detail_root = [
+  ".topic_content",
+  ".topic_detail",
+]
+detail_item = [
+  ".topic_content .info_item",
+  ".topic_detail .info_item",
+]
+attachment_name = [
+  ".topic_content .file_name",
+  ".topic_detail .file_name",
+]
+container_button = [
+  "button:has-text('开启场景')",
+  "button:has-text('启动容器')",
+  "button:has-text('开启靶机')",
+  ".open_scene_btn",
+]
+endpoint_address = [
+  ".topic_content .drone_item .drone_info_item",
+  ".topic_detail .drone_item",
+]
+flag_input = [
+  "input[placeholder*='flag']",
+  "input[placeholder*='Flag']",
+  ".flag-input input",
+]
+submit_button = [
+  "button:has-text('提交')",
+  "button:has-text('提交 Flag')",
+  ".submit-btn",
+]
+toast = [
+  ".el-message__content",
+  ".el-notification__content",
+  ".ant-message-notice-content",
+  ".toast-message",
+]
+solved_state = [
+  ".topic_content .solved",
+  ".topic_detail .solved",
+  ".topic_content .topic_solved",
+  ".topic_detail .topic_solved",
+  ".topic_status.solved",
+  ".is_solved",
+]

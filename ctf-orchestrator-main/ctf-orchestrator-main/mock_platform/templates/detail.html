@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}{{ challenge.title }} · 羊城杯 mock{% endblock %}
+{% block content %}
+<p class="muted"><a href="/compete/1749">← 返回赛题列表</a></p>
+
+{% if message %}
+<div class="alert {{ 'ok' if ok else 'err' }}">{{ message }}</div>
+{% endif %}
+
+<div class="panel">
+  <h2>{{ challenge.title }}</h2>
+  <div class="meta">
+    <span>类型 <b>{{ challenge.category }}</b></span>
+    <span>分值 <b class="score">{{ challenge.score }}</b></span>
+    <span>状态 <b>{{ '已解出' if challenge.solved else '未解出' }}</b></span>
+    <span>解出人数 <b>{{ challenge.solves }}</b></span>
+  </div>
+  <pre class="desc">{{ challenge.description_md }}</pre>
+</div>
+
+<div class="panel">
+  <h2>附件</h2>
+  {% if challenge.attachments %}
+  <ul class="attachments">
+    {% for attachment in challenge.attachments %}
+    <li><a href="{{ attachment.url }}">{{ attachment.name }}</a>
+        <span class="muted small">({{ attachment.size }} bytes)</span></li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <p class="muted">本题没有附件。</p>
+  {% endif %}
+</div>
+
+{% if challenge.container.available %}
+<div class="panel">
+  <h2>靶机</h2>
+  {% if challenge.target %}
+  <p>已启动：<code>{{ challenge.target.host }}:{{ challenge.target.port }}</code>
+     <span class="muted small">（过期时间 {{ challenge.target.expires_at }}）</span></p>
+  <p class="muted small">连接后按服务提示输入附件中的 token。</p>
+  {% else %}
+  <form class="inline-form" method="post" action="/compete/1749/challenges/{{ challenge.id }}/container">
+    <button class="primary" type="submit">启动容器</button>
+  </form>
+  {% endif %}
+</div>
+{% endif %}
+
+<div class="panel">
+  <h2>提交 Flag</h2>
+  {% if challenge.solved %}
+  <p class="tag solved">本题已解出，无需重复提交。</p>
+  {% else %}
+  <form class="submit-form" method="post" action="/compete/1749/challenges/{{ challenge.id }}/submit">
+    <input name="flag" placeholder="DASCTF{...}" autocomplete="off" required>
+    <button type="submit">提交</button>
+  </form>
+  <p class="muted small">本平台全局提交上限 {{ submit_limit }} 次，已用 {{ submit_attempts }} 次。</p>
+  {% endif %}
+</div>
+{% endblock %}

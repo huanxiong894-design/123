@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}赛题 · 羊城杯 mock{% endblock %}
+{% block content %}
+<section class="hero">
+  <h1>{{ competition_title }}</h1>
+  <p class="muted">竞赛时间：2026-10-24 10:00:00 ~ 2026-10-24 14:00:00 · 已提交 {{ submit_attempts }}/{{ submit_limit }} 次</p>
+</section>
+
+<div class="panel">
+  <h2>赛题列表</h2>
+  <table class="challenge-list">
+    <thead>
+      <tr><th>题目</th><th>类型</th><th>分值</th><th>状态</th></tr>
+    </thead>
+    <tbody>
+      {% for challenge in challenges %}
+      <tr class="challenge-item">
+        <td>
+          <a class="challenge-title" href="/compete/1749/challenges/{{ challenge.id }}">{{ challenge.title }}</a>
+        </td>
+        <td><span class="tag">{{ challenge.category }}</span></td>
+        <td class="score">{{ challenge.score }}</td>
+        <td>
+          {% if challenge.solved %}<span class="tag solved">已解出</span>
+          {% elif challenge.container.available %}<span class="tag">容器题</span>
+          {% else %}<span class="tag">未解出</span>{% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
