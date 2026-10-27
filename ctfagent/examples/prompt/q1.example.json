@@ -1,0 +1,14 @@
+{
+  "id": "q1",
+  "title": "示例：把平台给的题面贴进来",
+  "category": "web",
+  "prompt": "把平台给的题面原文整段贴在这里。\n容器地址一般也写在题面里，记得同时填到 targets。",
+  "targets": ["http://10.0.1.5:8080"],
+  "attachments": [
+    {"name": "source.zip", "url": "https://example.com/source.zip"}
+  ],
+  "flag_pattern": "flag\\{[^}]+\\}",
+  "flag_count": 1,
+  "hint": "可选：平台给的提示（没有就删掉这个字段）",
+  "workdir": ""
+}

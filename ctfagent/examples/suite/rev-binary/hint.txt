@@ -1,0 +1,1 @@
+strings check 之后注意看拼接顺序（parts 数组的顺序）。
