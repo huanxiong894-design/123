@@ -1,9 +1,0 @@
-{
-  "id": "xor-crypto",
-  "title": "单字节 XOR",
-  "category": "crypto",
-  "prompt": "cipher.bin 是明文用**单个字节**做 XOR 得到的密文。恢复密钥、解出明文，提交其中的 flag。",
-  "flag_pattern": "flag\\{[^}]+\\}",
-  "flag_count": 1,
-  "max_score": 200
-}

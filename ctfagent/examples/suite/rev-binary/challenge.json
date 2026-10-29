@@ -1,9 +1,0 @@
-{
-  "id": "rev-binary",
-  "title": "逆向入门：分段字符串",
-  "category": "rev",
-  "prompt": "check 是一个 ELF。flag 被拆成几段存在二进制里，程序运行时才拼起来。找出并拼接它们，然后提交。",
-  "flag_pattern": "flag\\{[^}]+\\}",
-  "flag_count": 1,
-  "max_score": 300
-}

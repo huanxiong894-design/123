@@ -1,1 +1,0 @@
-flag{b4se64_is_not_encryption}
