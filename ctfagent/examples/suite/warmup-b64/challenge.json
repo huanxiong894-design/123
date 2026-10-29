@@ -1,0 +1,9 @@
+{
+  "id": "warmup-b64",
+  "title": "热身：三层 base64",
+  "category": "misc",
+  "prompt": "工作目录下的 secret.txt 是一串 base64。它可能套了不止一层。解出明文里的 flag 并提交。",
+  "flag_pattern": "flag\\{[^}]+\\}",
+  "flag_count": 1,
+  "max_score": 100
+}

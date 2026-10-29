@@ -1,0 +1,58 @@
+# TSecBench hosted runner. Build from the ctfagent source directory:
+#   docker build --platform linux/amd64 -f Dockerfile.tsecbench -t ctfagent:tsecbench .
+# Runtime credentials are deliberately not accepted as build args or baked into layers.
+FROM golang:1.24.4-bookworm AS build
+
+WORKDIR /src
+COPY go.mod ./
+COPY . .
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 \
+    go build -trimpath -ldflags="-s -w" -o /out/ctfagent ./cmd/ctfagent
+
+FROM debian:bookworm-slim
+
+ENV HOME=/home/ctfagent \
+    TMPDIR=/tmp \
+    CTFAGENT_MODEL=deepseek-chat \
+    CTFAGENT_LLM_URL=http://api.deepseek.com.tsecbench.gw/v1
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+       ca-certificates \
+       binutils \
+       curl \
+       file \
+       gawk \
+       gcc \
+       gdb \
+       git \
+       jq \
+       libc6-dev \
+       make \
+       netcat-openbsd \
+       openssl \
+       passwd \
+       python3 \
+       python3-pip \
+       python3-pwntools \
+       socat \
+       unzip \
+       vim-common \
+       wget \
+       xxd \
+       xz-utils \
+       zip \
+    && rm -rf /var/lib/apt/lists/* /var/cache/apt/* /usr/share/doc/* /usr/share/man/* /usr/share/info/* /usr/share/locale/* \
+    && groupadd --gid 10001 ctfagent \
+    && useradd --uid 10001 --gid 10001 --create-home --home-dir /home/ctfagent --shell /usr/sbin/nologin ctfagent \
+    && mkdir -p /workspace /tmp/ctfagent-checkpoints \
+    && chown -R 10001:10001 /home/ctfagent /workspace /tmp/ctfagent-checkpoints
+
+COPY --from=build --chown=10001:10001 /out/ctfagent /usr/local/bin/ctfagent
+COPY --chown=0:0 docker/tsecbench-entrypoint.sh /usr/local/bin/tsecbench-entrypoint
+RUN chmod 0555 /usr/local/bin/ctfagent /usr/local/bin/tsecbench-entrypoint
+
+WORKDIR /workspace
+USER 10001:10001
+STOPSIGNAL SIGTERM
+ENTRYPOINT ["/usr/local/bin/tsecbench-entrypoint"]

@@ -1,0 +1,9 @@
+{
+  "id": "rsa-small-e",
+  "title": "RSA：小公钥指数且无填充",
+  "category": "crypto",
+  "prompt": "params.json 里有 RSA 的 n、e、c。e 很小，而且加密时没有做填充。恢复明文并提交其中的 flag。",
+  "flag_pattern": "flag\\{[^}]+\\}",
+  "flag_count": 1,
+  "max_score": 250
+}
